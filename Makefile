@@ -1,6 +1,6 @@
 NAME 			= 	philo
 COMPILE			= 	gcc -Wall -Werror -Wextra
-SRC 			=	*.c
+SRC 			=	main.c src/*.c
 OBJS			=	$(SRC:.c=.o)
 # SRC_BONUS		=
 # OBJS_BONUS	= $(SRC_BONUS:.c=.o)
