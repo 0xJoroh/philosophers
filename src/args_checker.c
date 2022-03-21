@@ -25,7 +25,7 @@ int checker_and_fill(int argc, char **argv, t_data *data)
         if (ft_atoi(argv[i]) >= 0)
             fill_data(data, i, ft_atoi(argv[i]));
         else
-            return quit("Arguments not ");
+            return quit("Arguments must be numbers ");
     if (!data->nbr_philo)
         return quit(NULL);
     return (0);

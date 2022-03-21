@@ -25,5 +25,6 @@ typedef struct s_data
 int ft_atoi(const char *str);
 int checker_and_fill(int argc, char **argv, t_data *data);
 int quit(char *msg);
+void *routine();
 
 #endif

@@ -1,6 +1,6 @@
 #include "./philo.h"
 
-static void showData(t_data data, t_philo **philo, int nbr)
+void showData(t_data data, t_philo **philo, int nbr)
 {
 	printf("nbr_philo\t=\t%d\n", data.nbr_philo);
 	printf("time_to_die\t=\t%d\n", data.time_to_die);
@@ -17,9 +17,9 @@ static void create_philos(int nbr, t_philo **philo)
 	int i;
 
 	i = -1;
-	*philo = (t_philo *)malloc(nbr);
+	*philo = (t_philo *)malloc(nbr * sizeof(t_philo *));
 	if (!*philo)
-		quit("malloc failed");
+		quit("philo allocation failed");
 	while (++i < nbr)
 		(*philo)[i].id = i;
 }
@@ -34,7 +34,21 @@ int fonction(int argc, char **argv)
 		return (-1);
 	create_philos(data.nbr_philo, &philo);
 
-	showData(data, &philo, ft_atoi(argv[1]));
+	// showData(data, &philo, ft_atoi(argv[1]));
+
+	// pthread_t thread_id, thread_id2;
+	// pthread_mutex_t mutex;
+
+	// pthread_mutex_init(&mutex, NULL);
+
+	// pthread_create(&thread_id, NULL, &routine, &mutex);
+	// pthread_create(&thread_id2, NULL, &routine, &mutex);
+	// pthread_join(thread_id, NULL);
+	// pthread_join(thread_id2, NULL);
+
+	// pthread_mutex_destroy(&mutex);
+
+	// printf("counter: %d\n", counter);
 
 	free(philo);
 	return (0);
