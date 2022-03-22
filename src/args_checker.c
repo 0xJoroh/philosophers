@@ -33,5 +33,7 @@ int check_fill(int argc, char **argv, t_data **data)
             fill_data(*data, i, ft_atoi(argv[i]));
         else
             return (quit("Arguments must be numbers"));
+    if (!(*data)->nbr_philo_eat)
+        return (quit(NULL));
     return (0);
 }

@@ -24,12 +24,13 @@ int fonction(int argc, char **argv)
 	philo = NULL;
 	if (check_fill(argc, argv, &data))
 		return (-1);
-	if (create_philos(data, &philo))
+	mutex_init(data);
+	if (allocate_philos(data, &philo))
 		return (-1);
 	if (simulation(data, philo))
 		return (-1);
-
-	showData(&philo, ft_atoi(argv[1]));
+	// showData(&philo, ft_atoi(argv[1]));
+	// mutex_destroy();
 	__free(philo, data);
 	return (0);
 }

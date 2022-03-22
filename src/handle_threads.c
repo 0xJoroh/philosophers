@@ -1,6 +1,6 @@
 #include "../philo.h"
 
-int create_philos(t_data *data, t_philo **philo)
+int allocate_philos(t_data *data, t_philo **philo)
 {
     int i;
 
@@ -25,19 +25,23 @@ int simulation(t_data *data, t_philo *philo)
     data->th = malloc(data->nbr_philo * sizeof(pthread_t));
     if (!data->th)
         return (quit("data thread malloc failed"));
-    pthread_mutex_init(&data->mutex, NULL);
-
-    // create threads
+    // start simulation
+    data->simu_start_time = get_time();
     while (++i < data->nbr_philo)
-        if (pthread_create(&data->th[i], NULL, &routine, philo))
+    {
+        // create threads
+        if (pthread_create(&data->th[i], NULL, &routine, &philo[i]))
             return (quit("Thread failed to create"));
+        usleep(100);
+    }
+    // check death (time_to_die)
+    // if (is_dead(&philo))
+    //     break; // (stop the simulation)
 
     // wait the threads and return there values
     i = -1;
     while (++i < data->nbr_philo)
         if (pthread_join(data->th[i], NULL))
             return (quit("Thread failed to join"));
-
-    pthread_mutex_destroy(&data->mutex);
     return (0);
 }
