@@ -1,56 +1,36 @@
 #include "./philo.h"
 
-void showData(t_data data, t_philo **philo, int nbr)
+void showData(t_philo **philo, int nbr)
 {
-	printf("nbr_philo\t=\t%d\n", data.nbr_philo);
-	printf("time_to_die\t=\t%d\n", data.time_to_die);
-	printf("time_to_eat\t=\t%d\n", data.time_to_eat);
-	printf("time_to_sleep\t=\t%d\n", data.time_to_sleep);
-	printf("nbr_philo_eat\t=\t%d\n", data.nbr_philo_eat);
-
+	printf("nbr_philo\t=\t%d\n", (*philo)[0].data->nbr_philo);
+	printf("time_to_die\t=\t%d\n", (*philo)[0].data->time_to_die);
+	printf("time_to_eat\t=\t%d\n", (*philo)[0].data->time_to_eat);
+	printf("time_to_sleep\t=\t%d\n", (*philo)[0].data->time_to_sleep);
+	printf("nbr_philo_eat\t=\t%d\n\n", (*philo)[0].data->nbr_philo_eat);
+	// printf("data address\t=\t%p\n", (*philo)[i].data);
 	for (int i = 0; i < nbr; i++)
-		printf("\nID:\t\t\t[%d]\n", (*philo)[i].id);
-}
-
-static void create_philos(int nbr, t_philo **philo)
-{
-	int i;
-
-	i = -1;
-	*philo = (t_philo *)malloc(nbr * sizeof(t_philo *));
-	if (!*philo)
-		quit("philo allocation failed");
-	while (++i < nbr)
-		(*philo)[i].id = i;
+	{
+		printf("ID:\t\t\t[%d]\n", (*philo)[i].id + 1);
+		printf("eat_nbr:\t\t[%d]\n\n", (*philo)[i].eat_nbr);
+	}
 }
 
 int fonction(int argc, char **argv)
 {
-	t_data data;
+	t_data *data;
 	t_philo *philo;
 
+	data = NULL;
 	philo = NULL;
-	if (checker_and_fill(argc, argv, &data))
+	if (check_fill(argc, argv, &data))
 		return (-1);
-	create_philos(data.nbr_philo, &philo);
+	if (create_philos(data, &philo))
+		return (-1);
+	if (simulation(data, philo))
+		return (-1);
 
-	// showData(data, &philo, ft_atoi(argv[1]));
-
-	// pthread_t thread_id, thread_id2;
-	// pthread_mutex_t mutex;
-
-	// pthread_mutex_init(&mutex, NULL);
-
-	// pthread_create(&thread_id, NULL, &routine, &mutex);
-	// pthread_create(&thread_id2, NULL, &routine, &mutex);
-	// pthread_join(thread_id, NULL);
-	// pthread_join(thread_id2, NULL);
-
-	// pthread_mutex_destroy(&mutex);
-
-	// printf("counter: %d\n", counter);
-
-	free(philo);
+	showData(&philo, ft_atoi(argv[1]));
+	__free(philo, data);
 	return (0);
 }
 
@@ -60,12 +40,3 @@ int main(int argc, char **argv)
 	// system("leaks philo");
 	return 0;
 }
-
-// pthread_create
-// pthread_mutex_init
-// pthread_mutex_lock
-// pthread_mutex_unlock
-// gettimeofday
-// usleep
-
-// pthread_join (optional)

@@ -14,19 +14,24 @@ static void fill_data(t_data *data, int i, int value)
         data->nbr_philo_eat = value;
 }
 
-int checker_and_fill(int argc, char **argv, t_data *data)
+int check_fill(int argc, char **argv, t_data **data)
 {
     int i;
 
-    if (argc != 5 && argc != 6)
-        return quit("Arguments must be between 4 to 5");
     i = 0;
+    if (argc != 5 && argc != 6)
+        return (quit("Arguments must be between 4 to 5"));
+    if (ft_atoi(argv[1]) <= 0) // if there is no philo
+        return (quit(NULL));
+    *data = malloc(sizeof(t_data));
+    if (!*data)
+        return (quit("data malloc failed"));
+    if (argc == 5) // if there is no number_of_times_each_philosopher_must_eat
+        (*data)->nbr_philo_eat = -1;
     while (++i < argc)
         if (ft_atoi(argv[i]) >= 0)
-            fill_data(data, i, ft_atoi(argv[i]));
+            fill_data(*data, i, ft_atoi(argv[i]));
         else
-            return quit("Arguments must be numbers ");
-    if (!data->nbr_philo)
-        return quit(NULL);
+            return (quit("Arguments must be numbers"));
     return (0);
 }
