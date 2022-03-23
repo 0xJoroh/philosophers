@@ -25,6 +25,7 @@ typedef struct s_philo
     int id;
     int eat_nbr; // number_of_times_each_philosopher_must_eat
     long last_meal;
+    int is_eating;
     t_data *data;
 } t_philo;
 
@@ -35,6 +36,7 @@ int simulation(t_data *data, t_philo *philo);
 int allocate_philos(t_data *data, t_philo **philo);
 void __free(t_philo *philo, t_data *data);
 void mutex_init(t_data *data);
+void mutex_destroy(t_data *data);
 int quit(char *msg);
 long get_time(void);
 void status(t_philo *philo, int state);

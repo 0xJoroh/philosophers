@@ -39,6 +39,18 @@ void mutex_init(t_data *data)
     }
 }
 
+void mutex_destroy(t_data *data)
+{
+    int i;
+
+    i = -1;
+    while (++i <= data->nbr_philo)
+    {
+        pthread_mutex_destroy(&data->fork_mutex[i]);
+        pthread_mutex_destroy(&data->eat_mutex[i]);
+    }
+}
+
 void status(t_philo *philo, int state)
 {
     long time = (get_time() - philo->data->simu_start_time) / 1000;
