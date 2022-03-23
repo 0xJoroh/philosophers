@@ -38,3 +38,30 @@ void mutex_init(t_data *data)
         pthread_mutex_init(&data->eat_mutex[i], NULL);
     }
 }
+
+void status(t_philo *philo, int state)
+{
+    long time = (get_time() - philo->data->simu_start_time) / 1000;
+    if (state == 1)
+        printf("\e[1;34m%ld %d has taken a fork \e[1;37m\n", time, philo->id + 1);
+    else if (state == 2)
+        printf("\e[1;32m%ld %d is eating \e[1;37m\n", time, philo->id + 1);
+    else if (state == 3)
+        printf("\e[1;33m%ld %d is sleeping \e[1;37m\n", time, philo->id + 1);
+    else if (state == 4)
+        printf("\033[1;35m%ld %d is thinking \e[1;37m\n", time, philo->id + 1);
+    else if (state == 5)
+        printf("Philo %d is reached times must eat\n", philo->id + 1);
+    else if (state == 6)
+        printf("\e[1;31m%ld %d died\e[1;37m\n", time, philo->id + 1);
+}
+
+void u_sleep(unsigned long usec)
+{
+    unsigned long start_time;
+
+    start_time = get_time();
+    usleep(usec - 1000);
+    while (((get_time() - start_time) * 1000) < usec)
+        ;
+}

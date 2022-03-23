@@ -17,14 +17,13 @@ typedef struct s_data
     int nbr_philo_eat; // number_of_times_each_philosopher_must_eat
     pthread_mutex_t *fork_mutex;
     pthread_mutex_t *eat_mutex;
-    pthread_mutex_t mutex;
     pthread_t *th;
 } t_data;
 
 typedef struct s_philo
 {
     int id;
-    int eat_nbr;
+    int eat_nbr; // number_of_times_each_philosopher_must_eat
     long last_meal;
     t_data *data;
 } t_philo;
@@ -38,5 +37,7 @@ void __free(t_philo *philo, t_data *data);
 void mutex_init(t_data *data);
 int quit(char *msg);
 long get_time(void);
+void status(t_philo *philo, int state);
+void u_sleep(unsigned long usec);
 
 #endif
