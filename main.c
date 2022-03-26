@@ -30,14 +30,15 @@ int fonction(int argc, char **argv)
 	if (simulation(data, philo))
 		return (-1);
 	// showData(&philo, ft_atoi(argv[1]));
-	// mutex_destroy();
-	__free(philo, data);
+	mutex_destroy(data);
+	// TODO: free data
+	//  __free(philo, data);
 	return (0);
 }
 
 int main(int argc, char **argv)
 {
 	fonction(argc, argv);
-	// system("leaks philo");
+	system("leaks philo");
 	return 0;
 }

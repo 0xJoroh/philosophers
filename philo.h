@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <pthread.h>
+
 typedef struct s_data
 {
     int nbr_philo; // number_of_philosophers
@@ -25,7 +26,6 @@ typedef struct s_philo
     int id;
     int eat_nbr; // number_of_times_each_philosopher_must_eat
     long last_meal;
-    int is_eating;
     t_data *data;
 } t_philo;
 

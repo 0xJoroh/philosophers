@@ -9,6 +9,15 @@ int quit(char *msg)
 
 void __free(t_philo *philo, t_data *data)
 {
+    int i;
+
+    i = -1;
+    if (data->fork_mutex && data->eat_mutex)
+        while (++i < data->nbr_philo)
+        {
+            free(&data->fork_mutex[i]);
+            free(&data->eat_mutex[i]);
+        }
     if (philo)
         free(philo);
     if (data->th)
@@ -32,7 +41,7 @@ void mutex_init(t_data *data)
     i = -1;
     data->fork_mutex = malloc(sizeof(pthread_mutex_t) * data->nbr_philo);
     data->eat_mutex = malloc(sizeof(pthread_mutex_t) * data->nbr_philo);
-    while (++i <= data->nbr_philo)
+    while (++i < data->nbr_philo)
     {
         pthread_mutex_init(&data->fork_mutex[i], NULL);
         pthread_mutex_init(&data->eat_mutex[i], NULL);
@@ -44,7 +53,7 @@ void mutex_destroy(t_data *data)
     int i;
 
     i = -1;
-    while (++i <= data->nbr_philo)
+    while (++i < data->nbr_philo)
     {
         pthread_mutex_destroy(&data->fork_mutex[i]);
         pthread_mutex_destroy(&data->eat_mutex[i]);

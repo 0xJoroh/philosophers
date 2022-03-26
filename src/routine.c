@@ -11,18 +11,16 @@ void take_fork(t_philo *philo)
 
 void eat(t_philo *philo)
 {
-    philo->is_eating = 1;
     pthread_mutex_lock(&philo->data->eat_mutex[philo->id]);
     philo->last_meal = get_time(); // Updat last time he aet
-    pthread_mutex_unlock(&philo->data->eat_mutex[philo->id]);
     status(philo, 2);
+    pthread_mutex_unlock(&philo->data->eat_mutex[philo->id]);
     // Decrement number of times each philosopher must eat
     u_sleep(philo->data->time_to_eat * 1000);
     philo->eat_nbr--;
     // Unlock both forks for next philos
     pthread_mutex_unlock(&philo->data->fork_mutex[(philo->id + 1) % philo->data->nbr_philo]);
     pthread_mutex_unlock(&philo->data->fork_mutex[philo->id]);
-    philo->is_eating = 0;
 }
 
 void sleeping(t_philo *philo)

@@ -5,7 +5,6 @@ int allocate_philos(t_data *data, t_philo **philo)
     int i;
 
     i = -1;
-    // TODO: fix 2 nbr of philo
     *philo = malloc(data->nbr_philo * sizeof(t_philo));
     if (!*philo)
         return (quit("philo allocation failed"));
@@ -13,11 +12,11 @@ int allocate_philos(t_data *data, t_philo **philo)
     {
         (*philo)[i].id = i;
         (*philo)[i].eat_nbr = data->nbr_philo_eat;
-        (*philo)[i].is_eating = 0;
         (*philo)[i].data = data; // each philo can have access to data, so we can check philo conditions inside routine
     }
     return (0);
 }
+
 int is_dead(t_philo *philo)
 {
     int i;
@@ -25,30 +24,26 @@ int is_dead(t_philo *philo)
 
     while (1)
     {
-        i = -1;
-        while (++i < philo->data->nbr_philo)
-        {
-            // check is there are any philo dead
-            if (philo[i].is_eating)
-                continue;
-            if ((get_time() - philo[i].last_meal) >= (philo[i].data->time_to_die * 1000))
-            {
-                // printf("%ld\n", (get_time() - philo[i].last_meal) / 1000);
-                status(&philo[i], 6);
-                return (1);
-            }
-        }
-        // TODO: check if philos are eatten enough
         d = 0;
+        i = -1;
         while (++i < philo->data->nbr_philo)
             if (philo[i].eat_nbr == 0)
                 d++;
         if (d == philo->data->nbr_philo)
             return (1);
-        usleep(100);
+
+        i = -1;
+        while (++i < philo->data->nbr_philo)
+            if ((get_time() - philo[i].last_meal) >= (philo[i].data->time_to_die * 1000))
+            {
+                status(&philo[i], 6);
+                return (1);
+            }
+        // usleep(100);
     }
     return (0);
 }
+
 int simulation(t_data *data, t_philo *philo)
 {
     int i;
