@@ -7,7 +7,8 @@ void showData(t_philo **philo, int nbr)
 	printf("time_to_eat\t=\t%d\n", (*philo)[0].data->time_to_eat);
 	printf("time_to_sleep\t=\t%d\n", (*philo)[0].data->time_to_sleep);
 	printf("nbr_philo_eat\t=\t%d\n\n", (*philo)[0].data->nbr_philo_eat);
-	// printf("data address\t=\t%p\n", (*philo)[i].data);
+	printf("data address\t=\t%p\n", (*philo)[i].data);
+
 	for (int i = 0; i < nbr; i++)
 	{
 		printf("ID:\t\t\t[%d]\n", (*philo)[i].id + 1);
@@ -31,14 +32,13 @@ int fonction(int argc, char **argv)
 		return (-1);
 	// showData(&philo, ft_atoi(argv[1]));
 	mutex_destroy(data);
-	// TODO: free data
-	//  __free(philo, data);
+	__free(philo, data);
 	return (0);
 }
 
 int main(int argc, char **argv)
 {
 	fonction(argc, argv);
-	system("leaks philo");
+	// system("leaks philo");
 	return 0;
 }
